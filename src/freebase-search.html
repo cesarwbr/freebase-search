@@ -3,4 +3,34 @@
 
 <polymer-element name="freebase-search">
 
+    <template>
+        <input type="text" value="{{searchText}}">
+    </template>
+    <!-- Import JQuery -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        Polymer('freebase-search', {
+            ready: function() {
+                console.log('ready!');
+            },
+            searchText: 'Cesar',
+            searchTextChanged: function() {
+                $.ajax({
+                    url: 'https://www.googleapis.com/freebase/v1/search?callback=?&key=AIzaSyCQXvFx7PMLEImgshuRNJ_vlngLBCTVxkA',
+                    dataType: 'jsonp',
+                    data: {
+                      query: this.searchText,
+                      exact: false,
+                      output: '(all)',
+                      limit: 1,
+                      prefixed: true
+                    },
+                    success: function(data) {
+                      console.log(data);
+                    }
+                });
+            }
+        });
+    </script>
 </polymer-element>
