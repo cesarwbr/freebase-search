@@ -1,0 +1,24 @@
+{
+    "name": "freebase-search",
+    "version": "0.0.1",
+    "description": "Freebase search web component",
+    "authors": [
+        "Cesar William <cesarwbr@gmail.com>"
+    ],
+    "license": "MIT",
+    "main": "dist/freebase-search.html",
+    "keywords": [
+        "polymer",
+        "freebase",
+        "search",
+        "web-components"
+    ],
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components"
+    ],
+    "dependencies": {
+        "polymer": "~0.3.3"
+    }
+}
