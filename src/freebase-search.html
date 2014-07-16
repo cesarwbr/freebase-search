@@ -4,7 +4,12 @@
 <polymer-element name="freebase-search">
 
     <template>
-        <input type="text" value="{{searchText}}">
+        <input type="text" value="{{searchText}}"><br>
+        <ul>
+            <template repeat="{{r in results}}">
+                <li>{{r.name}} - {{r.notable}}</li>
+            </template>
+        </ul>
     </template>
     <!-- Import JQuery -->
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -15,7 +20,9 @@
                 console.log('ready!');
             },
             searchText: 'Cesar',
+            results: [],
             searchTextChanged: function() {
+                var that = this;
                 $.ajax({
                     url: 'https://www.googleapis.com/freebase/v1/search?callback=?&key=AIzaSyCQXvFx7PMLEImgshuRNJ_vlngLBCTVxkA',
                     dataType: 'jsonp',
@@ -23,11 +30,23 @@
                       query: this.searchText,
                       exact: false,
                       output: '(all)',
-                      limit: 1,
+                      limit: 5,
                       prefixed: true
                     },
                     success: function(data) {
                       console.log(data);
+
+                      var result = data.result;
+                      that.results = [];
+                      for (var i = 0; i < result.length; i++) {
+                        if (result[i].name && result[i].notable && result[i].notable.name) {
+                          that.results.push({
+                              name: result[i].name,
+                              notable: result[i].notable.name
+                          });
+                        }
+                      }
+
                     }
                 });
             }
