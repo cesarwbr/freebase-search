@@ -1,36 +1,45 @@
 <!-- Import Polymer -->
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
-<polymer-element name="freebase-search">
+<polymer-element name="freebase-search" attributes="limit">
+
+    <!-- Import JQuery -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 
     <template>
         <input type="text" value="{{searchText}}"><br>
         <ul>
             <template repeat="{{r in results}}">
-                <li>{{r.name}} - {{r.notable}}</li>
+                <li>{{r.name}} - <span style="color: #ccc">{{r.notable}}</span></li>
             </template>
         </ul>
+        <img src="{{resultImage}}" alt="">
     </template>
-    <!-- Import JQuery -->
-    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 
     <script>
         Polymer('freebase-search', {
-            ready: function() {
-                console.log('ready!');
-            },
             searchText: 'Cesar',
+            limit: 5,
+            key: 'AIzaSyCQXvFx7PMLEImgshuRNJ_vlngLBCTVxkA',
             results: [],
+            resultImage: 'http://placehold.it/160&text=no+image',
             searchTextChanged: function() {
+
+                if(this.searchText.length < 3) {
+                    this.results = [];
+                    this.resultImage = 'http://placehold.it/160&text=no+image';
+                    return;
+                }
+
                 var that = this;
                 $.ajax({
-                    url: 'https://www.googleapis.com/freebase/v1/search?callback=?&key=AIzaSyCQXvFx7PMLEImgshuRNJ_vlngLBCTVxkA',
+                    url: 'https://www.googleapis.com/freebase/v1/search?callback=?&key=' + this.key,
                     dataType: 'jsonp',
                     data: {
                       query: this.searchText,
                       exact: false,
                       output: '(all)',
-                      limit: 5,
+                      limit: this.limit,
                       prefixed: true
                     },
                     success: function(data) {
@@ -45,6 +54,15 @@
                               notable: result[i].notable.name
                           });
                         }
+                      }
+
+                      if (result.length > 0 && result[0].output.all[
+                        'property./common/topic/image']) {
+                        var mid = result[0].output.all['property./common/topic/image'][0].mid;
+
+                        that.resultImage = 'https://www.googleapis.com/freebase/v1/image' + mid + '?key=AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs&maxwidth=160';
+                      } else {
+                        that.resultImage = 'http://placehold.it/160&text=no+image';
                       }
 
                     }
