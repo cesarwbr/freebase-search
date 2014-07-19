@@ -36,7 +36,7 @@
             <input on-keyup="{{inputTextKeyup}}" id="inputText" type="text" value="{{searchText}}"><br>
             <ul id="list" style="display: {{showTypeahead}}">
                 <template repeat="{{r in results}}">
-                    <li class="{{r.clazz}}">{{r.name}} - <span style="color: #ccc">{{r.notable}}</span></li>
+                    <li class="{{r.clazz}}" name="{{r.name}}" image="{{r.image}}">{{r.name}} - <span style="color: #ccc">{{r.notable}}</span></li>
                 </template>
             </ul>
         </div>
@@ -57,6 +57,23 @@
                 var list = $(this.$.list);
                 var actual = list.children('li.active');
                 switch(e.keyCode) {
+                    case 13: // enter
+                        var image = actual.attr('image');
+                        var name = actual.attr('name');
+
+                        if(!!image) {
+                            this.resultImage = 'https://www.googleapis.com/freebase/v1/image' + image + '?key=AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs&maxwidth=160';
+                        } else {
+                            this.resultImage = 'http://placehold.it/160&text=no+image';
+                        }
+
+                        this.searchText = name;
+
+                        this.showTypeahead = 'none';
+
+                        this.$.inputText.blur();
+
+                        break;
                     case 40: // down
                         e.preventDefault();
                         var next = actual.next('li');
@@ -112,13 +129,16 @@
                           that.results.push({
                               name: result[i].name,
                               notable: result[i].notable.name,
-                              clazz: i === 0 ? 'active' : ''
+                              clazz: i === 0 ? 'active' : '',
+                              image: result[i].output.all['property./common/topic/image'] ? result[i].output.all['property./common/topic/image'][0].mid : ''
                           });
                         }
                       }
 
                       if (that.results.length > 0) {
                           that.showTypeahead = 'block';
+                      } else {
+                          that.showTypeahead = 'none';
                       }
 
                       if (result.length > 0 && result[0].output.all[
