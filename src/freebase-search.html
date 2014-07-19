@@ -24,6 +24,10 @@
                 font-size: 0.85em;
             }
 
+            #typeahead ul li {
+                cursor: default;
+            }
+
             #typeahead input {
                 width: 344px;
             }
@@ -36,7 +40,7 @@
             <input on-keyup="{{inputTextKeyup}}" id="inputText" type="text" value="{{searchText}}"><br>
             <ul id="list" style="display: {{showTypeahead}}">
                 <template repeat="{{r in results}}">
-                    <li class="{{r.clazz}}" name="{{r.name}}" image="{{r.image}}">{{r.name}} - <span style="color: #ccc">{{r.notable}}</span></li>
+                    <li on-click="{{itemClick}}" class="{{r.clazz}}" name="{{r.name}}" image="{{r.image}}">{{r.name}} - <span style="color: #ccc">{{r.notable}}</span></li>
                 </template>
             </ul>
         </div>
@@ -53,14 +57,29 @@
                     list.children('li').first().addClass('active');
                 }
             },
+            itemClick: function(event, detail, sender) {
+                var image = $(sender).attr('image');
+                var name = $(sender).attr('name');
+                if(!!image) {
+                    this.resultImage = 'https://www.googleapis.com/freebase/v1/image' + image + '?key=AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs&maxwidth=160';
+                } else {
+                    this.resultImage = 'http://placehold.it/160&text=no+image';
+                }
+
+                this.searchText = name;
+
+                this.showTypeahead = 'none';
+
+                this.$.inputText.blur();
+            },
             inputTextKeyup: function(e) {
                 var list = $(this.$.list);
                 var actual = list.children('li.active');
+                var image, name;
                 switch(e.keyCode) {
                     case 13: // enter
-                        var image = actual.attr('image');
-                        var name = actual.attr('name');
-
+                        image = actual.attr('image');
+                        name = actual.attr('name');
                         if(!!image) {
                             this.resultImage = 'https://www.googleapis.com/freebase/v1/image' + image + '?key=AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs&maxwidth=160';
                         } else {
@@ -80,6 +99,16 @@
                         if (next.length > 0) {
                             actual.removeClass('active');
                             next.addClass('active');
+                            image = next.attr('image');
+                        } else {
+                            image = actual.attr('image');
+                        }
+
+
+                        if(!!image) {
+                            this.resultImage = 'https://www.googleapis.com/freebase/v1/image' + image + '?key=AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs&maxwidth=160';
+                        } else {
+                            this.resultImage = 'http://placehold.it/160&text=no+image';
                         }
 
                         break;
@@ -89,6 +118,15 @@
                         if (prev.length > 0) {
                             actual.removeClass('active');
                             prev.addClass('active');
+                            image = prev.attr('image');
+                        } else {
+                            image = actual.attr('image');
+                        }
+
+                        if(!!image) {
+                            this.resultImage = 'https://www.googleapis.com/freebase/v1/image' + image + '?key=AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs&maxwidth=160';
+                        } else {
+                            this.resultImage = 'http://placehold.it/160&text=no+image';
                         }
                         break;
                 }
