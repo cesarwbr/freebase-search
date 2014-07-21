@@ -1,22 +1,39 @@
 #typeahead {
     display: inline;
+
     font-family: 'Open Sans', sans-serif;
 }
 
 #typeahead ul {
     position: absolute;
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.2);
     top: 17px;
     left: 59px;
+
     width: 346px;
-    list-style: none;
     padding: 5px 0;
+
+    list-style: none;
+
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: white;
+
     font-size: 0.85em;
 }
 
 #typeahead ul li {
     cursor: default;
+}
+
+#typeahead ul li:hover {
+    background: #0967d7;
+}
+
+#typeahead ul li:hover .inputName {
+    color: white;
+}
+
+#typeahead ul li:hover .inputCategory {
+    color: rgba(108, 175, 247, 0.88);
 }
 
 #typeahead ul li img {
@@ -49,14 +66,27 @@
 
 .result-item {
     display: table;
+    height: 36px;
     width: 100%;
+    padding-top: 4px;
+    padding-left: 4px;
 }
 
 .result-item > div {
     display: table-cell;
+
     vertical-align: top;
 }
 
 .col1 {
     width: 40px;
+}
+
+.circular {
+    width: 33px;
+    height: 33px;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+    border-radius: 150px;
+    background-repeat: none;
 }
