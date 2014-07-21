@@ -3,49 +3,24 @@
 
 <polymer-element name="freebase-search" attributes="limit">
 
-    <!-- Import JQuery -->
-    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+
 
     <template>
-        <style>
-            #typeahead {
-                display: inline;
-            }
-
-            #typeahead ul {
-                position: absolute;
-                background: white;
-                border: 1px solid rgba(0, 0, 0, 0.2);
-                top: 17px;
-                left: 59px;
-                width: 346px;
-                list-style: none;
-                padding: 5px 0;
-                font-size: 0.85em;
-            }
-
-            #typeahead ul li {
-                cursor: default;
-            }
-
-            #typeahead input {
-                width: 344px;
-            }
-
-            .active {
-                background: #eee;
-            }
-        </style>
+        <link href="freebase-search.css" rel="stylesheet" />
         <div id="typeahead">
             <input on-keyup="{{inputTextKeyup}}" id="inputText" type="text" value="{{searchText}}"><br>
             <ul id="list" style="display: {{showTypeahead}}">
                 <template repeat="{{r in results}}">
-                    <li on-click="{{itemClick}}" class="{{r.clazz}}" name="{{r.name}}" image="{{r.image}}">{{r.name}} - <span style="color: #ccc">{{r.notable}}</span></li>
+                    <li on-click="{{itemClick}}" class="{{r.clazz}}" name="{{r.name}}" image="{{r.image}}"><div class="result-item"><div class="col1"><img src="{{r.imageUrl}}" alt=""></div><div class="col2"><span class="inputName">{{r.name}}</span><br/><span class="inputCategory">{{r.notable}}</span><div></div></li>
                 </template>
             </ul>
         </div>
-        <img src="{{resultImage}}" alt="">
+        <img _src="{{resultImage}}" alt="">
     </template>
+
+    <!-- Import JQuery -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 
     <script>
         Polymer('freebase-search', {
@@ -168,7 +143,8 @@
                               name: result[i].name,
                               notable: result[i].notable.name,
                               clazz: i === 0 ? 'active' : '',
-                              image: result[i].output.all['property./common/topic/image'] ? result[i].output.all['property./common/topic/image'][0].mid : ''
+                              image: result[i].output.all['property./common/topic/image'] ? result[i].output.all['property./common/topic/image'][0].mid : '',
+                              imageUrl: result[i].output.all['property./common/topic/image'] ? 'https://www.googleapis.com/freebase/v1/image' + result[i].output.all['property./common/topic/image'][0].mid + '?key=AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs&maxwidth=160' : 'http://placehold.it/160&text=no+image'
                           });
                         }
                       }

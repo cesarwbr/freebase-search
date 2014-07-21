@@ -1,0 +1,62 @@
+#typeahead {
+    display: inline;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#typeahead ul {
+    position: absolute;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    top: 17px;
+    left: 59px;
+    width: 346px;
+    list-style: none;
+    padding: 5px 0;
+    font-size: 0.85em;
+}
+
+#typeahead ul li {
+    cursor: default;
+}
+
+#typeahead ul li img {
+    max-height: 40px;
+}
+
+#typeahead input {
+    width: 344px;
+}
+
+.inputName {
+    font-weight: bold;
+}
+
+.inputCategory {
+    color: #ccc;
+}
+
+.active {
+    background: #0967d7;
+}
+
+.active .inputName {
+    color: white;
+}
+
+.active .inputCategory {
+    color: rgba(108, 175, 247, 0.88);
+}
+
+.result-item {
+    display: table;
+    width: 100%;
+}
+
+.result-item > div {
+    display: table-cell;
+    vertical-align: top;
+}
+
+.col1 {
+    width: 40px;
+}

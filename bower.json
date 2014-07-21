@@ -19,8 +19,8 @@
     "bower_components"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#~0.3.3",
     "jquery": "~2.1.1",
-    "google-apis": "PolymerLabs/google-apis#~0.3.0"
+    "polymer": "Polymer/polymer#~0.3.3",
+    "google-apis": "PolymerLabs/google-apis#master"
   }
 }
