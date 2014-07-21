@@ -1,13 +1,12 @@
 #typeahead {
     display: inline;
-
-    font-family: 'Open Sans', sans-serif;
+    position: relative;
 }
 
 #typeahead ul {
     position: absolute;
-    top: 17px;
-    left: 59px;
+    top: 8px;
+    left: 0;
 
     width: 346px;
     padding: 5px 0;
@@ -50,6 +49,7 @@
 
 .inputCategory {
     color: #ccc;
+    font-size: 0.85em;
 }
 
 .active {

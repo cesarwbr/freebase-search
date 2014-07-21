@@ -2,12 +2,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
 <polymer-element name="freebase-search" attributes="limit domain">
-
-
-
-
     <template>
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
         <link href="freebase-search.css" rel="stylesheet" />
         <div id="typeahead">
             <input on-keyup="{{inputTextKeyup}}" id="inputText" type="text" value="{{searchText}}"><br>
@@ -130,23 +125,23 @@
                     return;
                 }
 
-                var searchDomain = '';
+                var searchData = {
+                  query: this.searchText,
+                  exact: false,
+                  output: '(all)',
+                  limit: this.limit,
+                  prefixed: true
+                };
+
                 if(this.domain) {
-                    searchDomain = '(any type:' + this.domain + ')';
+                    searchData.filter = '(any type:' + this.domain + ')';
                 }
 
                 var that = this;
                 $.ajax({
                     url: 'https://www.googleapis.com/freebase/v1/search?callback=?&key=' + this.key,
                     dataType: 'jsonp',
-                    data: {
-                      query: this.searchText,
-                      exact: false,
-                      output: '(all)',
-                      filter: searchDomain,
-                      limit: this.limit,
-                      prefixed: true
-                    },
+                    data: searchData,
                     success: function(data) {
                       console.log(data);
 
