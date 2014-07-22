@@ -14,6 +14,32 @@
 </head>
 <body>
     <label>Search: </label>
-    <freebase-search domain="/location/country"></freebase-search>
+    <freebase-search id="search-element"></freebase-search>
+    <img id="showImg" src="http://placehold.it/160&text=no+image" alt="">
+    <div id="showDesc"></div>
+    <script>
+      (function(){
+        var element = document.querySelector('#search-element');
+        var showDesc = document.querySelector('#showDesc');
+        var showImg = document.querySelector('#showImg');
+        element.addEventListener('result', function(result) {
+          console.log(result);
+          var descriptions = result.detail.output.all['description./common/topic/description'];
+          if(!!descriptions && descriptions.length > 0) {
+            showDesc.innerHTML = descriptions[0];
+          } else {
+            showDesc.innerHTML = '';
+          }
+
+          var images = result.detail.output.all['property./common/topic/image'];
+
+          if(!!images && images.length > 0) {
+            showImg.src = 'https://www.googleapis.com/freebase/v1/image' + images[0].mid + '?key=AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs&maxwidth=160';
+          } else {
+            showImg.src = 'http://placehold.it/160&text=no+image';
+          }
+        });
+      })();
+    </script>
 </body>
 </html>

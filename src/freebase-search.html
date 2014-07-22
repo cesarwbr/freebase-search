@@ -8,11 +8,11 @@
             <input on-keyup="{{inputTextKeyup}}" id="inputText" type="text" value="{{searchText}}"><br>
             <ul id="list" style="display: {{showTypeahead}}">
                 <template repeat="{{r in results}}">
-                    <li on-click="{{itemClick}}" class="{{r.clazz}}" name="{{r.name}}" image="{{r.image}}"><div class="result-item"><div class="col1"><div class="circular" _style = 'background-image: url({{r.imageUrl}});'></div></div><div class="col2"><span class="inputName">{{r.name}}</span><br/><span class="inputCategory">{{r.notable}}</span><div></div></li>
+                    <li on-click="{{itemClick}}" index="{{r.index}}" class="{{r.clazz}}" name="{{r.name}}" image="{{r.image}}"><div class="result-item"><div class="col1"><div class="circular" _style = 'background-image: url({{r.imageUrl}});'></div></div><div class="col2"><span class="inputName">{{r.name}}</span><br/><span class="inputCategory">{{r.notable}}</span><div></div></li>
                 </template>
             </ul>
         </div>
-        <img _src="{{resultImage}}" alt="">
+        <!-- <img _src="{{resultImage}}" alt=""> -->
     </template>
 
     <!-- Import JQuery -->
@@ -51,6 +51,8 @@
                     case 13: // enter
                         image = actual.attr('image');
                         name = actual.attr('name');
+
+                        var index = actual.attr('index');
                         if(!!image) {
                             this.resultImage = 'https://www.googleapis.com/freebase/v1/image' + image + '?key=AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs&maxwidth=160';
                         } else {
@@ -64,6 +66,8 @@
                         this.$.inputText.blur();
 
                         this.preventSearch = true;
+
+                        this.fire('result', this.originalResults[index]);
 
                         break;
                     case 40: // down
@@ -110,6 +114,7 @@
             limit: 4,
             key: 'AIzaSyCQXvFx7PMLEImgshuRNJ_vlngLBCTVxkA',
             results: [],
+            originalResults: [],
             showTypeahead: 'none',
             resultImage: 'http://placehold.it/160&text=no+image',
             searchTextChanged: function() {
@@ -147,15 +152,18 @@
 
                       var result = data.result;
                       that.results = [];
+                      that.originalResults = [];
                       for (var i = 0; i < result.length; i++) {
                         if (result[i].name && result[i].notable && result[i].notable.name) {
                           that.results.push({
+                              index: i,
                               name: result[i].name,
                               notable: result[i].notable.name,
                               clazz: i === 0 ? 'active' : '',
                               image: result[i].output.all['property./common/topic/image'] ? result[i].output.all['property./common/topic/image'][0].mid : '',
                               imageUrl: result[i].output.all['property./common/topic/image'] ? 'https://www.googleapis.com/freebase/v1/image' + result[i].output.all['property./common/topic/image'][0].mid + '?key=AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs&maxwidth=33' : 'http://placehold.it/160&text=no+image'
                           });
+                          that.originalResults.push(result[i]);
                         }
                       }
 
