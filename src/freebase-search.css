@@ -13,8 +13,9 @@
 
     list-style: none;
 
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid #e4e4e4;
     background: white;
+    background-image: linear-gradient(to bottom, #fefefe, #ededed);
 
     font-size: 0.85em;
 }
@@ -24,7 +25,9 @@
 }
 
 #typeahead ul li:hover {
-    background: #0967d7;
+    /*background: #0967d7;*/
+    background-image: linear-gradient(to bottom, #5497d2, #3a87cc);
+    border: 1px solid #1c6fb5;
 }
 
 #typeahead ul li:hover .inputName {
@@ -32,7 +35,8 @@
 }
 
 #typeahead ul li:hover .inputCategory {
-    color: rgba(108, 175, 247, 0.88);
+    /*color: rgba(108, 175, 247, 0.88);*/
+    color: #6fa8d9;
 }
 
 #typeahead ul li img {
@@ -53,7 +57,9 @@
 }
 
 .active {
-    background: #0967d7;
+    /*background: #0967d7;*/
+    background-image: linear-gradient(to bottom, #5497d2, #3a87cc);
+    border: 1px solid #1c6fb5;
 }
 
 .active .inputName {
@@ -61,7 +67,8 @@
 }
 
 .active .inputCategory {
-    color: rgba(108, 175, 247, 0.88);
+    /*color: rgba(108, 175, 247, 0.88);*/
+    color: #6fa8d9;
 }
 
 .result-item {
