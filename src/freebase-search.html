@@ -1,18 +1,17 @@
 <!-- Import Polymer -->
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
-<polymer-element name="freebase-search" attributes="limit domain">
+<polymer-element name="freebase-search" attributes="limit domain thumbnail">
     <template>
         <link href="freebase-search.css" rel="stylesheet" />
         <div id="typeahead">
             <input on-keyup="{{inputTextKeyup}}" id="inputText" type="text" value="{{searchText}}"><br>
             <ul id="list" style="display: {{showTypeahead}}">
                 <template repeat="{{r in results}}">
-                    <li on-click="{{itemClick}}" index="{{r.index}}" class="{{r.clazz}}" name="{{r.name}}"><div class="result-item"><div class="col1"><div class="circular" _style = 'background-image: url({{r.imageUrl}});'></div></div><div class="col2"><span class="inputName">{{r.name}}</span><br/><span class="inputCategory">{{r.notable}}</span><div></div></li>
+                    <li on-click="{{itemClick}}" index="{{r.index}}" class="{{r.clazz}}" name="{{r.name}}"><div class="result-item"><div class="col1" style="display: {{showThumbnail}}"><div class="circular" _style = 'background-image: url({{r.imageUrl}});'></div></div><div class="col2"><span class="inputName">{{r.name}}</span><br/><span class="inputCategory">{{r.notable}}</span><div></div></li>
                 </template>
             </ul>
         </div>
-        <!-- <img _src="{{resultImage}}" alt=""> -->
     </template>
 
     <!-- Import JQuery -->
@@ -24,6 +23,12 @@
                 var list = $(this.$.list);
                 if(list.children('li')) {
                     list.children('li').first().addClass('active');
+                }
+
+                if(this.thumbnail === false) {
+                    this.showThumbnail = 'none';
+                } else {
+                    this.showThumbnail = 'table-cell';
                 }
             },
             setResult: function(actual) {
@@ -79,6 +84,7 @@
             results: [],
             originalResults: [],
             showTypeahead: 'none',
+            thumbnail: true,
             searchTextChanged: function() {
                 if(this.preventSearch) {
                     this.preventSearch = false;

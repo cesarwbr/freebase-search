@@ -14,7 +14,7 @@
 </head>
 <body>
     <label>Search: </label>
-    <freebase-search id="search-element"></freebase-search>
+    <freebase-search id="search-element" thumbnail="true"></freebase-search>
     <img id="show-image" src="http://placehold.it/160&text=no+image" alt="">
     <div id="show-description"></div>
     <script>
@@ -23,7 +23,7 @@
             showDesc = document.querySelector('#show-description'),
             showImg = document.querySelector('#show-image'),
             key = 'AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs';
-            
+
         element.addEventListener('result', function(result) {
           console.log(result);
           var descriptions = result.detail.output.all['description./common/topic/description'];
