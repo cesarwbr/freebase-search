@@ -5,23 +5,25 @@
     <title>&lt;freebase-search&gt;</title>
     <script src="bower_components/platform/platform.js"></script>
     <link rel="import" href="src/freebase-search.html">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <style>
         body {
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'Roboto', sans-serif;
         }
     </style>
 </head>
 <body>
     <label>Search: </label>
     <freebase-search id="search-element"></freebase-search>
-    <img id="showImg" src="http://placehold.it/160&text=no+image" alt="">
-    <div id="showDesc"></div>
+    <img id="show-image" src="http://placehold.it/160&text=no+image" alt="">
+    <div id="show-description"></div>
     <script>
       (function(){
-        var element = document.querySelector('#search-element');
-        var showDesc = document.querySelector('#showDesc');
-        var showImg = document.querySelector('#showImg');
+        var element = document.querySelector('#search-element'),
+            showDesc = document.querySelector('#show-description'),
+            showImg = document.querySelector('#show-image'),
+            key = 'AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs';
+            
         element.addEventListener('result', function(result) {
           console.log(result);
           var descriptions = result.detail.output.all['description./common/topic/description'];
@@ -34,7 +36,7 @@
           var images = result.detail.output.all['property./common/topic/image'];
 
           if(!!images && images.length > 0) {
-            showImg.src = 'https://www.googleapis.com/freebase/v1/image' + images[0].mid + '?key=AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs&maxwidth=160';
+            showImg.src = 'https://www.googleapis.com/freebase/v1/image' + images[0].mid + '?key=' + key + '&maxwidth=160';
           } else {
             showImg.src = 'http://placehold.it/160&text=no+image';
           }
