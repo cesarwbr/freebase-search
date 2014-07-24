@@ -1,7 +1,7 @@
 <!-- Import Polymer -->
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
-<polymer-element name="freebase-search" attributes="limit domain thumbnail">
+<polymer-element name="freebase-search" attributes="limit domain thumbnail lang">
     <template>
         <link href="freebase-search.css" rel="stylesheet" />
         <div id="typeahead">
@@ -85,6 +85,7 @@
             originalResults: [],
             showTypeahead: 'none',
             thumbnail: true,
+            lang: 'en',
             searchTextChanged: function() {
                 if(this.preventSearch) {
                     this.preventSearch = false;
@@ -102,7 +103,8 @@
                   exact: false,
                   output: '(all)',
                   limit: this.limit,
-                  prefixed: true
+                  prefixed: true,
+                  lang: this.lang
                 };
 
                 if(this.domain) {
