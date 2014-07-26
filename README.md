@@ -28,6 +28,10 @@ $ bower install freebase-search --save
     <link rel="import" href="bower_components/freebase-search/dist/freebase-search.html">
     ```
 
+3. Obtain a Freebase API key
+
+In order to obtain an API key you have to access [this link](https://code.google.com/apis/console).
+
 3. Start using it!
 
     ```html
@@ -39,6 +43,7 @@ $ bower install freebase-search --save
 Attribute  | Options        | Default             | Description
 ---        | ---            | ---                 | ---
 `domain`   | *string*       |                     | Specifies the [Freebase Domain](https://developers.google.com/freebase/guide/basic_concepts#domains), eg: `/business`, `/music`, `/film`, `medicine`...
+`key`      | *string*       |                     | To use Freebase APIs, you need to [obtain an API key](https://code.google.com/apis/console) to use the APIs.
 `lang`     | `en`, `es`, `fr` , `de`, `it`, `pt`, `zh`, `ja`,`ko`, `ru`, `sv`, `fi`, `da`, `nl`, `el`, `ro`, `tr`, `hu`, `th`, `pl`, `cs`, `id`, `bg`, `uk`, `ca`, `eu`, `no`, `sl`, `sk`, `hr`, `sr`, `ar`, `hi`, `vi`, `fa`, `ga`, `iw`, `lv`, `lt`, `gl`, `is`, `hy`, `lo`, `km`, `sq`, `fil`, `zxx`    | `en`    | Specifies the language to be used in the search and results.
 `limit`    | *number*       | `4`                 | Specifies the number of results on search.
 `thumbnail`| *boolean*      | `false`             | Specifies if the result list should show a thumbnail on each item.
@@ -53,7 +58,7 @@ Event      | Description
 ## Example
 
 ```html
-<freebase-search id="search-element" thumbnail="true" lang="en"></freebase-search>
+<freebase-search id="search-element" thumbnail="true" lang="en" key="XXXXX"></freebase-search>
 ```
 
 ## License
