@@ -44,11 +44,17 @@ Attribute  | Options        | Default             | Description
 `thumbnail`| *boolean*      | `false`             | Specifies if the result list should show a thumbnail on each item.
 
 
-### Events
+## Events
 
 Event      | Description
 ---        | ---
 `onresult` | Triggers when the user choose one result on the typeahead list.
+
+## Example
+
+    ```html
+    <freebase-search id="search-element" thumbnail="true" lang="en"></freebase-search>
+    ```
 
 ## License
 
