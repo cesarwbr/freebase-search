@@ -35,7 +35,7 @@ $ bower install freebase-search --save
 4. Start using it!
 
     ```html
-    <freebase-search></freebase-search>
+    <freebase-search key="XXXXX"></freebase-search>
     ```
 
 ## Options
