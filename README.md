@@ -30,9 +30,9 @@ $ bower install freebase-search --save
 
 3. Obtain a Freebase API key
 
-In order to obtain an API key you have to access [this link](https://code.google.com/apis/console).
+    In order to obtain an API key you have to access [this link](https://code.google.com/apis/console).
 
-3. Start using it!
+4. Start using it!
 
     ```html
     <freebase-search></freebase-search>
