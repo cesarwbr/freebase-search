@@ -1,6 +1,6 @@
 # &lt;freebase-search&gt;
 
-> Web Component wrapper to the [Freebase API](https://developers.google.com/freebase/), that allows you to search on Freebase that is a large collaborative knowledge base using [Polymer](http://www.polymer-project.org/).
+> Web Component wrapper to the [Freebase API](https://developers.google.com/freebase/), that allows you to search on Freebase (a large collaborative knowledge base) using [Polymer](http://www.polymer-project.org/).
 
 ## Demo
 
