@@ -8,7 +8,17 @@
             <input on-keyup="{{inputTextKeyup}}" id="inputText" type="text" value="{{searchText}}"><br>
             <ul id="list" style="display: {{showTypeahead}}">
                 <template repeat="{{r in results}}">
-                    <li on-click="{{itemClick}}" index="{{r.index}}" class="{{r.clazz}}" name="{{r.name}}"><div class="result-item"><div class="col1" style="display: {{showThumbnail}}"><div class="circular" _style = 'background-image: url({{r.imageUrl}});'></div></div><div class="col2"><span class="inputName">{{r.name}}</span><br/><span class="inputCategory">{{r.notable}}</span><div></div></li>
+                    <li on-click="{{itemClick}}" index="{{r.index}}" class="{{r.clazz}}" name="{{r.name}}">
+                        <div class="result-item">
+                            <div class="col1" style="display: {{showThumbnail}}">
+                                <div class="circular" _style = 'background-image: url({{r.imageUrl}});'></div>
+                            </div>
+                            <div class="col2">
+                                <span class="inputName">{{r.name}}</span><br/>
+                                <span class="inputCategory">{{r.notable}}</span>
+                            </div>
+                        </div>
+                    </li>
                 </template>
             </ul>
         </div>
@@ -19,12 +29,17 @@
 
     <script>
         Polymer('freebase-search', {
+            searchText: '',
+            domain: '',
+            preventSearch: false,
+            limit: 4,
+            key: 'AIzaSyCQXvFx7PMLEImgshuRNJ_vlngLBCTVxkA',
+            results: [],
+            originalResults: [],
+            showTypeahead: 'none',
+            thumbnail: true,
+            lang: 'en',
             ready: function() {
-                var list = $(this.$.list);
-                if(list.children('li')) {
-                    list.children('li').first().addClass('active');
-                }
-
                 if(this.thumbnail === false) {
                     this.showThumbnail = 'none';
                 } else {
@@ -32,8 +47,8 @@
                 }
             },
             setResult: function(actual) {
-                var name = actual.attr('name');
-                var index = actual.attr('index');
+                var name = actual.getAttribute('name');
+                var index = actual.getAttribute('index');
 
                 this.searchText = name;
 
@@ -46,11 +61,12 @@
                 this.preventSearch = true;
             },
             itemClick: function(event, detail, sender) {
-                this.setResult($(sender));
+                this.setResult(sender);
             },
             inputTextKeyup: function(e) {
                 var list = $(this.$.list);
-                var actual = list.children('li.active');
+                //var actual = list.children('li.active');
+                var actual = this.$.list.querySelector('li.active');
                 switch(e.keyCode) {
                     case 13: // enter
                         this.setResult(actual);
@@ -58,34 +74,24 @@
                         break;
                     case 40: // down
                         e.preventDefault();
-                        var next = actual.next('li');
-                        if (next.length > 0) {
-                            actual.removeClass('active');
-                            next.addClass('active');
+                        var next = actual.nextElementSibling;
+                        if (!!next && next.tagName === 'LI') {
+                            actual.classList.remove('active');
+                            next.classList.add('active');
                         }
 
                         break;
                     case 38: //up
                         e.preventDefault();
-                        var prev = actual.prev('li');
-                        if (prev.length > 0) {
-                            actual.removeClass('active');
-                            prev.addClass('active');
+                        var prev = actual.previousElementSibling;
+                        if (!!prev && prev.tagName === 'LI') {
+                            actual.classList.remove('active');
+                            prev.classList.add('active');
                         }
 
                         break;
                 }
             },
-            searchText: '',
-            domain: '',
-            preventSearch: false,
-            limit: 4,
-            key: 'AIzaSyCQXvFx7PMLEImgshuRNJ_vlngLBCTVxkA',
-            results: [],
-            originalResults: [],
-            showTypeahead: 'none',
-            thumbnail: true,
-            lang: 'en',
             searchTextChanged: function() {
                 if(this.preventSearch) {
                     this.preventSearch = false;
@@ -117,6 +123,10 @@
                     dataType: 'jsonp',
                     data: searchData,
                     success: function(data) {
+                      if(!!data.error) {
+                          console.error('Error ' + data.error.code + ': ' + data.error.message);
+                          return;
+                      }
                       var result = data.result;
                       that.results = [];
                       that.originalResults = [];
