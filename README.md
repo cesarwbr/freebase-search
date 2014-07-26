@@ -38,7 +38,7 @@ $ bower install freebase-search --save
 
 Attribute  | Options        | Default             | Description
 ---        | ---            | ---                 | ---
-`domain`   | *string*       | ``                  | Specifies the freebase domain. For example: `/business`, `/music`, `/film`, `medicine`...
+`domain`   | *string*       |                     | Specifies the [Freebase Domain](https://developers.google.com/freebase/guide/basic_concepts#domains), eg: `/business`, `/music`, `/film`, `medicine`...
 `lang`     | `en`, `es`, `fr` , `de`, `it`, `pt`, `zh`, `ja`,`ko`, `ru`, `sv`, `fi`, `da`, `nl`, `el`, `ro`, `tr`, `hu`, `th`, `pl`, `cs`, `id`, `bg`, `uk`, `ca`, `eu`, `no`, `sl`, `sk`, `hr`, `sr`, `ar`, `hi`, `vi`, `fa`, `ga`, `iw`, `lv`, `lt`, `gl`, `is`, `hy`, `lo`, `km`, `sq`, `fil`, `zxx`    | `en`    | Specifies the language to be used in the search and results.
 `limit`    | *number*       | `4`                 | Specifies the number of results on search.
 
