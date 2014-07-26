@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>&lt;freebase-search&gt;</title>
+    <script src="bower_components/platform/platform.js"></script>
+    <link rel="import" href="src/freebase-search.html">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <label>Search: </label>
+    <!-- langs: en,es,fr,de,it,pt,zh,ja,ko,ru,sv,fi,da,nl,el,ro,tr,hu,th,pl,cs,id,bg,uk,ca,eu,no,sl,sk,hr,sr,ar,hi,vi,fa,ga,iw,lv,lt,gl,is,hy,lo,km,sq,fil,zxx -->
+    <freebase-search id="search-element" thumbnail="true" lang="pt"></freebase-search>
+    <img id="show-image" src="http://placehold.it/160&text=no+image" alt="">
+    <div id="show-description"></div>
+    <script>
+      (function(){
+        var element = document.querySelector('#search-element'),
+            showDesc = document.querySelector('#show-description'),
+            showImg = document.querySelector('#show-image'),
+            key = 'AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs';
+
+        element.addEventListener('result', function(result) {
+          console.log(result);
+          var descriptions = result.detail.output.all['description./common/topic/description'];
+          if(!!descriptions && descriptions.length > 0) {
+            showDesc.innerHTML = descriptions[0];
+          } else {
+            showDesc.innerHTML = '';
+          }
+
+          var images = result.detail.output.all['property./common/topic/image'];
+
+          if(!!images && images.length > 0) {
+            showImg.src = 'https://www.googleapis.com/freebase/v1/image' + images[0].mid + '?key=' + key + '&maxwidth=160';
+          } else {
+            showImg.src = 'http://placehold.it/160&text=no+image';
+          }
+        });
+      })();
+    </script>
+</body>
+</html>
