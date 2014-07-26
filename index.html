@@ -4,37 +4,59 @@
     <meta charset="UTF-8">
     <title>&lt;freebase-search&gt;</title>
     <script src="bower_components/platform/platform.js"></script>
+
+    <!-- Demo CSS -->
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto'  type='text/css'>
+    <link rel="stylesheet" href="demo/demo.css">
+
+    <!-- Importing freebase-search -->
     <link rel="import" href="src/freebase-search.html">
-    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
-    </style>
 </head>
 <body>
-    <label>Search: </label>
+    <div class="search-box">
+        <label>Search: </label>
+        <freebase-search id="search-element" thumbnail="true" lang="en" key="AIzaSyCQXvFx7PMLEImgshuRNJ_vlngLBCTVxkA"></freebase-search>
+    </div>
 
-    <freebase-search id="search-element" thumbnail="true" lang="en" key="AIzaSyCQXvFx7PMLEImgshuRNJ_vlngLBCTVxkA"></freebase-search>
+    <div class="result-box">
+        <div class="show-image">
+            <img src="http://placehold.it/222&text=no+image" alt="">
+        </div>
 
-    <img id="show-image" src="http://placehold.it/160&text=no+image" alt="">
-    <div id="show-description"></div>
+        <div class="about">
+            <div class="show-name"></div>
+            <div class="show-title"></div>
+            <div class="show-description"></div>
+        </div>
+    </div>
+
     <script>
       (function(){
         var element = document.querySelector('#search-element'),
-            showDesc = document.querySelector('#show-description'),
-            showImg = document.querySelector('#show-image'),
+            showDesc = document.querySelector('.show-description'),
+            showImg = document.querySelector('.show-image > img'),
+            showName = document.querySelector('.show-name');
+            showTitle = document.querySelector('.show-title');
             key = 'AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs';
 
         element.addEventListener('result', function(result) {
-          var descriptions = result.detail.output.all['description./common/topic/description'];
+          console.log(result);
+          var descriptions = result.detail.output.all['description./common/topic/description'],
+              name = !!result.detail.name ? result.detail.name : '',
+              title = !!result.detail.notable ? result.detail.notable.name : '';
+              images = result.detail.output.all['property./common/topic/image'];
+
+          showName.innerHTML = name;
+
+          showTitle.innerHTML = title;
+
           if(!!descriptions && descriptions.length > 0) {
             showDesc.innerHTML = descriptions[0];
           } else {
             showDesc.innerHTML = '';
           }
 
-          var images = result.detail.output.all['property./common/topic/image'];
+
 
           if(!!images && images.length > 0) {
             showImg.src = 'https://www.googleapis.com/freebase/v1/image' + images[0].mid + '?key=' + key + '&maxwidth=160';
