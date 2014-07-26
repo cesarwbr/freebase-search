@@ -1,0 +1,62 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+}
+
+/* ===================================================
+   Search
+   =================================================== */
+.search-box {
+    padding-bottom: 20px;
+}
+
+/* ===================================================
+   Show result
+   =================================================== */
+
+.result-box {
+    display: table;
+    width: 710px;
+    height: auto;
+    padding: 15px;
+    border: solid 2px #EEE;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.result-box > div {
+    display: table-cell;
+    vertical-align: top;
+}
+
+.show-image {
+    display: table-cell;
+    float: left;
+    width: 222px;
+    height: 188px;
+    text-align: center;
+}
+
+.show-image > img {
+    max-width: 222px;
+    max-height: 188px;
+}
+
+.show-name {
+    color: #555;
+    font-weight: 600;
+    font-size: 1.25em;
+}
+
+.show-title {
+    color: #999;
+    font-size: 1em;
+}
+
+.show-description {
+    margin-top: 20px;
+    font-size: 1em;
+    color: #555;
+}
