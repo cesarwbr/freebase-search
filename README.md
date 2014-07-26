@@ -52,9 +52,9 @@ Event      | Description
 
 ## Example
 
-    ```html
-    <freebase-search id="search-element" thumbnail="true" lang="en"></freebase-search>
-    ```
+```html
+<freebase-search id="search-element" thumbnail="true" lang="en"></freebase-search>
+```
 
 ## License
 
