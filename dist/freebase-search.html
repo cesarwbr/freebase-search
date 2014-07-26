@@ -1,0 +1,158 @@
+<!-- Import Polymer -->
+<link rel="import" href="../../polymer/polymer.html">
+
+<polymer-element name="freebase-search" attributes="limit domain thumbnail lang">
+    <template>
+        <link href="freebase-search.css" rel="stylesheet" />
+        <div id="typeahead">
+            <input on-keyup="{{inputTextKeyup}}" id="inputText" type="text" value="{{searchText}}"><br>
+            <ul id="list" style="display: {{showTypeahead}}">
+                <template repeat="{{r in results}}">
+                    <li on-click="{{itemClick}}" index="{{r.index}}" class="{{r.clazz}}" name="{{r.name}}">
+                        <div class="result-item">
+                            <div class="col1" style="display: {{showThumbnail}}">
+                                <div class="circular" _style = 'background-image: url({{r.imageUrl}});'></div>
+                            </div>
+                            <div class="col2">
+                                <span class="inputName">{{r.name}}</span><br/>
+                                <span class="inputCategory">{{r.notable}}</span>
+                            </div>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </template>
+
+    <!-- Import JQuery -->
+    <script src="../../jquery/dist/jquery.min.js"></script>
+
+    <script>
+        Polymer('freebase-search', {
+            searchText: '',
+            domain: '',
+            preventSearch: false,
+            limit: 4,
+            key: 'AIzaSyCQXvFx7PMLEImgshuRNJ_vlngLBCTVxkA',
+            results: [],
+            originalResults: [],
+            showTypeahead: 'none',
+            thumbnail: true,
+            lang: 'en',
+            ready: function() {
+                if(this.thumbnail === false) {
+                    this.showThumbnail = 'none';
+                } else {
+                    this.showThumbnail = 'table-cell';
+                }
+            },
+            setResult: function(actual) {
+                var name = actual.getAttribute('name');
+                var index = actual.getAttribute('index');
+
+                this.searchText = name;
+
+                this.showTypeahead = 'none';
+
+                this.$.inputText.blur();
+
+                this.fire('result', this.originalResults[index]);
+
+                this.preventSearch = true;
+            },
+            itemClick: function(event, detail, sender) {
+                this.setResult(sender);
+            },
+            inputTextKeyup: function(e) {
+                var list = $(this.$.list);
+                //var actual = list.children('li.active');
+                var actual = this.$.list.querySelector('li.active');
+                switch(e.keyCode) {
+                    case 13: // enter
+                        this.setResult(actual);
+
+                        break;
+                    case 40: // down
+                        e.preventDefault();
+                        var next = actual.nextElementSibling;
+                        if (!!next && next.tagName === 'LI') {
+                            actual.classList.remove('active');
+                            next.classList.add('active');
+                        }
+
+                        break;
+                    case 38: //up
+                        e.preventDefault();
+                        var prev = actual.previousElementSibling;
+                        if (!!prev && prev.tagName === 'LI') {
+                            actual.classList.remove('active');
+                            prev.classList.add('active');
+                        }
+
+                        break;
+                }
+            },
+            searchTextChanged: function() {
+                if(this.preventSearch) {
+                    this.preventSearch = false;
+                    return;
+                }
+
+                if(this.searchText.length < 3) {
+                    this.results = [];
+                    this.showTypeahead = 'none';
+                    return;
+                }
+
+                var searchData = {
+                  query: this.searchText,
+                  exact: false,
+                  output: '(all)',
+                  limit: this.limit,
+                  prefixed: true,
+                  lang: this.lang
+                };
+
+                if(this.domain) {
+                    searchData.filter = '(any type:' + this.domain + ')';
+                }
+
+                var that = this;
+                $.ajax({
+                    url: 'https://www.googleapis.com/freebase/v1/search?callback=?&key=' + this.key,
+                    dataType: 'jsonp',
+                    data: searchData,
+                    success: function(data) {
+                      if(!!data.error) {
+                          console.error('Error ' + data.error.code + ': ' + data.error.message);
+                          return;
+                      }
+                      var result = data.result;
+                      that.results = [];
+                      that.originalResults = [];
+                      for (var i = 0; i < result.length; i++) {
+                        if (result[i].name && result[i].notable && result[i].notable.name) {
+                          that.results.push({
+                              index: i,
+                              name: result[i].name,
+                              notable: result[i].notable.name,
+                              clazz: i === 0 ? 'active' : '',
+                              image: result[i].output.all['property./common/topic/image'] ? result[i].output.all['property./common/topic/image'][0].mid : '',
+                              imageUrl: result[i].output.all['property./common/topic/image'] ? 'https://www.googleapis.com/freebase/v1/image' + result[i].output.all['property./common/topic/image'][0].mid + '?key=AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs&maxwidth=33' : 'http://placehold.it/160&text=no+image'
+                          });
+                          that.originalResults.push(result[i]);
+                        }
+                      }
+
+                      if (that.results.length > 0) {
+                          that.showTypeahead = 'block';
+                      } else {
+                          that.showTypeahead = 'none';
+                      }
+
+                    }
+                });
+            }
+        });
+    </script>
+</polymer-element>

@@ -1,0 +1,100 @@
+#typeahead {
+    display: inline;
+    position: relative;
+}
+
+#typeahead ul {
+    position: absolute;
+    top: 8px;
+    left: 0;
+
+    width: 346px;
+    padding: 5px 0;
+
+    list-style: none;
+
+    border: 1px solid #e4e4e4;
+    background: white;
+    background-image: linear-gradient(to bottom, #fefefe, #ededed);
+
+    font-size: 0.85em;
+}
+
+#typeahead ul li {
+    cursor: default;
+}
+
+#typeahead ul li:hover {
+    /*background: #0967d7;*/
+    background-image: linear-gradient(to bottom, #5497d2, #3a87cc);
+    border: 1px solid #1c6fb5;
+}
+
+#typeahead ul li:hover .inputName {
+    color: white;
+}
+
+#typeahead ul li:hover .inputCategory {
+    /*color: rgba(108, 175, 247, 0.88);*/
+    color: #6fa8d9;
+}
+
+#typeahead ul li img {
+    max-height: 40px;
+}
+
+#typeahead input {
+    width: 344px;
+}
+
+.inputName {
+    font-weight: bold;
+}
+
+.inputCategory {
+    color: #ccc;
+    font-size: 0.85em;
+}
+
+.active {
+    /*background: #0967d7;*/
+    background-image: linear-gradient(to bottom, #5497d2, #3a87cc);
+    border: 1px solid #1c6fb5;
+}
+
+.active .inputName {
+    color: white;
+}
+
+.active .inputCategory {
+    /*color: rgba(108, 175, 247, 0.88);*/
+    color: #6fa8d9;
+}
+
+.result-item {
+    display: table;
+    height: 36px;
+    width: 100%;
+    padding-top: 4px;
+    padding-left: 4px;
+    padding-bottom: 2px;
+}
+
+.result-item > div {
+    display: table-cell;
+
+    vertical-align: top;
+}
+
+.col1 {
+    width: 40px;
+}
+
+.circular {
+    width: 33px;
+    height: 33px;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+    border-radius: 150px;
+    background-repeat: none;
+}
