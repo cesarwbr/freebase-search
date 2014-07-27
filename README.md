@@ -42,12 +42,12 @@ $ bower install freebase-search --save
 
 Attribute  | Options        | Default             | Description
 ---        | ---            | ---                 | ---
-`domain`   | *string*       |                     | Specifies the [Freebase Domain](https://developers.google.com/freebase/guide/basic_concepts#domains), eg: `/business`, `/music`, `/film`, `medicine`...
 `exact`    | *boolean*      | false               | Return the exact value of the search
 `key`      | *string*       |                     | To use Freebase APIs, you need to [obtain an API key](https://code.google.com/apis/console) to use the APIs.
 `lang`     | `en`, `es`, `fr` , `de`, `it`, `pt`, `zh`, `ja`,`ko`, `ru`, `sv`, `fi`, `da`, `nl`, `el`, `ro`, `tr`, `hu`, `th`, `pl`, `cs`, `id`, `bg`, `uk`, `ca`, `eu`, `no`, `sl`, `sk`, `hr`, `sr`, `ar`, `hi`, `vi`, `fa`, `ga`, `iw`, `lv`, `lt`, `gl`, `is`, `hy`, `lo`, `km`, `sq`, `fil`, `zxx`    | `en`    | Specifies the language to be used in the search and results.
 `limit`    | *number*       | `4`                 | Specifies the number of results on search.
 `thumbnail`| *boolean*      | `false`             | Specifies if the result list should show a thumbnail on each item.
+`topic`    | *string*       |                     | Specifies the [Freebase Domain](https://developers.google.com/freebase/guide/basic_concepts#domains), eg: `/business`, `/music`, `/film`, `medicine`...
 
 
 ## Events
