@@ -49,25 +49,21 @@
 
         element.addEventListener('result', function(result) {
           console.log(result);
-          var descriptions = result.detail.output.all['description./common/topic/description'],
-              socialMedias = result.detail.output.all['url./common/topic/social_media_presence'],
+          var description = result.detail.description,
+              socialMedias = result.detail.socialMediasUrl,
               name = !!result.detail.name ? result.detail.name : '',
-              title = !!result.detail.notable ? result.detail.notable.name : '';
-              images = result.detail.output.all['property./common/topic/image'];
+              title = !!result.detail.title ? result.detail.title : '';
+              images = result.detail.images;
 
           fbicon.style.display = 'none';
           gpicon.style.display = 'none';
           twicon.style.display = 'none';
-          
+
           showName.innerHTML = name;
 
           showTitle.innerHTML = title;
 
-          if(!!descriptions && descriptions.length > 0) {
-            showDesc.innerHTML = descriptions[0];
-          } else {
-            showDesc.innerHTML = '';
-          }
+           showDesc.innerHTML = description;
 
           if(!!socialMedias) {
               for(var i = 0; i < socialMedias.length; i++) {
@@ -87,8 +83,8 @@
 
 
 
-          if(!!images && images.length > 0) {
-            showImg.src = 'https://www.googleapis.com/freebase/v1/image' + images[0].mid + '?key=' + key + '&maxwidth=160';
+          if(images.length > 0) {
+            showImg.src = images[0];
           } else {
             showImg.src = 'http://placehold.it/160&text=no+image';
           }

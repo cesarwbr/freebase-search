@@ -25,7 +25,6 @@
 }
 
 #typeahead ul li:hover {
-    /*background: #0967d7;*/
     background-image: linear-gradient(to bottom, #5497d2, #3a87cc);
     border: 1px solid #1c6fb5;
 }
@@ -35,7 +34,6 @@
 }
 
 #typeahead ul li:hover .inputCategory {
-    /*color: rgba(108, 175, 247, 0.88);*/
     color: #6fa8d9;
 }
 
@@ -67,7 +65,6 @@
 }
 
 .active .inputCategory {
-    /*color: rgba(108, 175, 247, 0.88);*/
     color: #6fa8d9;
 }
 

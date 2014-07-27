@@ -34,8 +34,7 @@ body {
 .show-image {
     display: table-cell;
     float: left;
-    width: 222px;
-    height: 188px;
+    width: 200px;
     text-align: center;
 }
 
