@@ -24,6 +24,11 @@
         </div>
 
         <div class="about">
+            <div class="show-socialmedia">
+                <a class="fb-icon" target="_blank"></a>
+                <a class="gp-icon" target="_blank"></a>
+                <a class="tw-icon" target="_blank"></a>
+            </div>
             <div class="show-name"></div>
             <div class="show-title"></div>
             <div class="show-description"></div>
@@ -35,17 +40,25 @@
         var element = document.querySelector('#search-element'),
             showDesc = document.querySelector('.show-description'),
             showImg = document.querySelector('.show-image > img'),
-            showName = document.querySelector('.show-name');
-            showTitle = document.querySelector('.show-title');
+            showName = document.querySelector('.show-name'),
+            showTitle = document.querySelector('.show-title'),
+            fbicon = document.querySelector('.fb-icon'),
+            gpicon = document.querySelector('.gp-icon'),
+            twicon = document.querySelector('.tw-icon'),
             key = 'AIzaSyCQVC9yA72POMg2VjiQhSJQQP1nf3ToZTs';
 
         element.addEventListener('result', function(result) {
           console.log(result);
           var descriptions = result.detail.output.all['description./common/topic/description'],
+              socialMedias = result.detail.output.all['url./common/topic/social_media_presence'],
               name = !!result.detail.name ? result.detail.name : '',
               title = !!result.detail.notable ? result.detail.notable.name : '';
               images = result.detail.output.all['property./common/topic/image'];
 
+          fbicon.style.display = 'none';
+          gpicon.style.display = 'none';
+          twicon.style.display = 'none';
+          
           showName.innerHTML = name;
 
           showTitle.innerHTML = title;
@@ -54,6 +67,22 @@
             showDesc.innerHTML = descriptions[0];
           } else {
             showDesc.innerHTML = '';
+          }
+
+          if(!!socialMedias) {
+              for(var i = 0; i < socialMedias.length; i++) {
+                  var socialMedia = socialMedias[i];
+                  if(socialMedia.indexOf('plus.google.com') !== -1) {
+                      gpicon.style.display = 'block';
+                      gpicon.href = socialMedia;
+                  } else if(socialMedia.indexOf('twitter.com') !== -1) {
+                      twicon.style.display = 'block';
+                      twicon.href = socialMedia;
+                  } else if(socialMedia.indexOf('facebook.com') !== -1) {
+                      fbicon.style.display = 'block';
+                      fbicon.href = socialMedia;
+                  }
+              }
           }
 
 

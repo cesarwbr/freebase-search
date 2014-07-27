@@ -60,3 +60,24 @@ body {
     font-size: 1em;
     color: #555;
 }
+
+.show-socialmedia > a {
+    width: 30px;
+    height: 30px;
+    background-size: 30px 30px;
+    float: right;
+    cursor: pointer;
+    display: none;
+}
+
+.fb-icon {
+    background: url('fb-icon.png');
+}
+
+.gp-icon {
+    background: url('gp-icon.png');
+}
+
+.tw-icon {
+    background: url('tw-icon.png');
+}
