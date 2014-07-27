@@ -184,7 +184,7 @@
                             if (result[i].name && result[i].notable && result[i]
                                 .notable.name) {
                                 that.results.push({
-                                    index: i,
+                                    index: that.results.length,
                                     name: result[i].name,
                                     notable: result[i].notable.name,
                                     clazz: i === 0 ? 'active' : '',
