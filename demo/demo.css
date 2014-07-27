@@ -39,8 +39,7 @@ body {
 }
 
 .show-image > img {
-    max-width: 222px;
-    max-height: 188px;
+    max-width: 190px;
 }
 
 .show-name {
