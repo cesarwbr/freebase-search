@@ -2,6 +2,8 @@
 
 > Web Component wrapper to the [Freebase API](https://developers.google.com/freebase/), that allows you to search on Freebase (a large collaborative knowledge base) using [Polymer](http://www.polymer-project.org/).
 
+![](http://f.cl.ly/items/222C0V1v252f190f2d0z/ezgif.com-gif-maker.gif)
+
 ## Demo
 
 [Check it live!](http://cesarwbr.github.io/freebase-search/)
