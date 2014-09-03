@@ -5,7 +5,7 @@
     <template>
         <link href="freebase-search.css" rel="stylesheet" />
         <div id="typeahead">
-            <input on-keyup="{{inputTextKeyup}}" id="inputText" placeholder="{{placeholder}}" type="text" value="{{searchText}}"><br>
+            <input on-keyup="{{inputTextKeyup}}" id="inputText" placeholder="{{placeholder}}" type="search" value="{{searchText}}"><br>
             <ul id="list" style="display: {{showTypeahead}}">
                 <template repeat="{{r in results}}">
                     <li on-click="{{itemClick}}" index="{{r.index}}" class="{{r.clazz}}" name="{{r.name}}">
