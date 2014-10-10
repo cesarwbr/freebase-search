@@ -51,6 +51,7 @@
             },
             getResultObj: function(originalResult) {
                 var obj = {};
+                obj.mid = originalResult.mid;
                 obj.name = originalResult.name;
                 obj.title = originalResult.notable.name;
                 obj.images = this.getImagesArray(originalResult.output.all[
