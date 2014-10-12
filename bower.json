@@ -1,6 +1,6 @@
 {
   "name": "freebase-search",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Web Component wrapper to the Freebase API, that allows you to search on Freebase (a large collaborative knowledge base) using Polymer",
   "authors": [
     "Cesar William <cesarwbr@gmail.com>"
