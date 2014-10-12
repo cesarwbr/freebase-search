@@ -4,6 +4,7 @@
 }
 
 #typeahead ul {
+    display: none;
     position: absolute;
     top: 8px;
     left: 0;

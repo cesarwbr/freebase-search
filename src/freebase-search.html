@@ -1,12 +1,12 @@
 <!-- Import Polymer -->
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
-<polymer-element name="freebase-search" attributes="limit topic thumbnail lang key exact placeholder">
+<polymer-element name="freebase-search" attributes="limit topic thumbnail lang key exact placeholder width">
     <template>
         <link href="freebase-search.css" rel="stylesheet" />
         <div id="typeahead">
             <input on-keyup="{{inputTextKeyup}}" id="inputText" placeholder="{{placeholder}}" type="search" value="{{searchText}}"><br>
-            <ul id="list" style="display: {{showTypeahead}}">
+            <ul id="list">
                 <template repeat="{{r in results}}">
                     <li on-click="{{itemClick}}" index="{{r.index}}" class="{{r.clazz}}" name="{{r.name}}">
                         <div class="result-item">
@@ -41,6 +41,7 @@
             originalResults: [],
             showTypeahead: 'none',
             thumbnail: true,
+            width: '226px',
             lang: 'en',
             ready: function() {
                 if (this.thumbnail === false) {
@@ -48,6 +49,10 @@
                 } else {
                     this.showThumbnail = 'table-cell';
                 }
+
+                this.$.inputText.style.width = this.width;
+                this.$.list.style.width = this.width;
+
             },
             getResultObj: function(originalResult) {
                 var obj = {};
@@ -68,7 +73,7 @@
 
                 this.searchText = name;
 
-                this.showTypeahead = 'none';
+                this.$.list.style.display = 'none';
 
                 this.$.inputText.blur();
 
@@ -150,7 +155,7 @@
 
                 if (this.searchText.length < 3) {
                     this.results = [];
-                    this.showTypeahead = 'none';
+                    this.$.list.style.display = 'none';
                     return;
                 }
 
@@ -198,9 +203,9 @@
                         }
 
                         if (that.results.length > 0) {
-                            that.showTypeahead = 'block';
+                            that.$.list.style.display = 'block';
                         } else {
-                            that.showTypeahead = 'none';
+                            that.$.list.style.display = 'none';
                         }
 
                     }
