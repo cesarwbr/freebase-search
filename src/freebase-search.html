@@ -1,11 +1,18 @@
 <!-- Import Polymer -->
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/core-icon/core-icon.html">
+<link rel="import" href="../bower_components/core-field/core-field.html">
 
 <polymer-element name="freebase-search" attributes="limit topic thumbnail lang key exact placeholder width">
     <template>
         <link href="freebase-search.css" rel="stylesheet" />
         <div id="typeahead">
-            <input on-keyup="{{inputTextKeyup}}" id="inputText" placeholder="{{placeholder}}" type="search" value="{{searchText}}"><br>
+            <core-field id="core_field" icon="search">
+              <core-icon icon="search"></core-icon>
+              <input on-keyup="{{inputTextKeyup}}" id="inputText" placeholder="{{placeholder}}" type="search" value="{{searchText}}"><br>
+            </core-field>
+
             <ul id="list">
                 <template repeat="{{r in results}}">
                     <li on-click="{{itemClick}}" index="{{r.index}}" class="{{r.clazz}}" name="{{r.name}}">
@@ -52,6 +59,7 @@
 
                 this.$.inputText.style.width = this.width;
                 this.$.list.style.width = this.width;
+                this.$.core_field.style.width = this.width;
 
             },
             getResultObj: function(originalResult) {
