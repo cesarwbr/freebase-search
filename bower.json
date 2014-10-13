@@ -1,6 +1,6 @@
 {
   "name": "freebase-search",
-  "version": "0.0.11",
+  "version": "0.0.14",
   "description": "Web Component wrapper to the Freebase API, that allows you to search on Freebase (a large collaborative knowledge base) using Polymer",
   "authors": [
     "Cesar William <cesarwbr@gmail.com>"
@@ -23,7 +23,6 @@
     "jquery": "~2.1.1",
     "polymer": "Polymer/polymer#~0.4.2",
     "core-field": "Polymer/core-field#~0.4.2",
-    "core-icon": "Polymer/core-icon#~0.4.2",
     "core-icons": "Polymer/core-icons#~0.4.2"
   }
 }
