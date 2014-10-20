@@ -2,6 +2,7 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../core-icons/core-icons.html">
 <link rel="import" href="../../core-field/core-field.html">
+<link rel="import" href="../../voice-elements/dist/voice-recognition.html">
 
 <polymer-element name="freebase-search" attributes="limit topic thumbnail lang key exact placeholder width">
     <template>
@@ -9,7 +10,9 @@
         <div id="typeahead">
             <core-field id="core_field" icon="search">
               <core-icon icon="search"></core-icon>
-              <input on-keyup="{{inputTextKeyup}}" id="inputText" placeholder="{{placeholder}}" type="search" value="{{searchText}}"><br>
+              <input on-keyup="{{inputTextKeyup}}" id="inputText" placeholder="{{placeholder}}" type="search" value="{{searchText}}">
+              <core-icon id="voice-icon" icon="settings-voice" on-click="{{voiceClick}}" class="{{voiceClazz}}"></core-icon>
+              <voice-recognition continuous="true" id="recognition_element"></voice-recognition>
             </core-field>
 
             <ul id="list">
@@ -48,7 +51,9 @@
             showTypeahead: 'none',
             thumbnail: true,
             width: '226px',
+            voiceOn: false,
             lang: 'en',
+            voiceClazz: 'voice-off',
             ready: function() {
                 if (this.thumbnail === false) {
                     this.showThumbnail = 'none';
@@ -60,6 +65,34 @@
                 this.$.list.style.width = this.width;
                 this.$.core_field.style.width = this.width;
 
+                var voiceElement = this.$.recognition_element;
+                var that = this;
+                voiceElement.addEventListener('result', function(e) {
+                    that.searchText = e.detail.result;
+                    this.text = '';
+                });
+
+            },
+            voiceTurnOff: function(voiceElement) {
+              this.voiceOn = false;
+              this.voiceClazz = 'voice-off';
+              voiceElement.stop();
+              voiceElement.abort();
+            },
+            voiceTurnOn: function(voiceElement) {
+              this.voiceOn = true;
+              this.voiceClazz = 'voice-on';
+              voiceElement.start();
+            },
+            voiceClick: function() {
+              var voiceElement = this.$.recognition_element;
+
+              if(this.voiceOn) {
+                this.voiceTurnOff(voiceElement);
+                return;
+              }
+
+              this.voiceTurnOn(voiceElement);
             },
             getResultObj: function(originalResult) {
                 var obj = {};
@@ -74,10 +107,7 @@
                     'url./common/topic/social_media_presence'];
                 return obj;
             },
-            setResult: function(actual) {
-                var name = actual.getAttribute('name');
-                var index = actual.getAttribute('index');
-
+            setResult: function(name, index) {
                 this.searchText = name;
 
                 this.$.list.style.display = 'none';
@@ -90,15 +120,19 @@
                 this.preventSearch = true;
             },
             itemClick: function(event, detail, sender) {
-                this.setResult(sender);
+                var name = sender.getAttribute('name');
+                var index = sender.getAttribute('index');
+                this.setResult(name, index);
             },
             inputTextKeyup: function(e) {
                 var list = $(this.$.list);
                 var actual = this.$.list.querySelector('li.active');
+                var name = actual.getAttribute('name');
+                var index = actual.getAttribute('index');
 
                 switch (e.keyCode) {
                     case 13: // enter
-                        this.setResult(actual);
+                        this.setResult(name, index);
 
                         break;
                     case 40: // down
@@ -153,6 +187,15 @@
                 } else {
                     return 'http://placehold.it/160&text=no+image';
                 }
+            },
+            resultReady: function() {
+              if(this.voiceOn && this.originalResults.length > 0) {
+                var first = this.originalResults[0];
+                this.setResult(first.name, 0);
+                this.voiceTurnOff(this.$.recognition_element);
+              } else {
+                this.voiceTurnOff(this.$.recognition_element);
+              }
             },
             searchTextChanged: function() {
                 if (this.preventSearch) {
@@ -214,6 +257,8 @@
                         } else {
                             that.$.list.style.display = 'none';
                         }
+
+                        that.resultReady();
 
                     }
                 });
