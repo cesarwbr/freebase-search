@@ -47,6 +47,18 @@
     width: 344px;
 }
 
+#voice-icon {
+  cursor: pointer;
+}
+
+.voice-off {
+  color: #999;
+}
+
+.voice-on {
+  color: #f44;
+}
+
 .inputName {
     font-weight: bold;
 }
